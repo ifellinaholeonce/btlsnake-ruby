@@ -13,8 +13,10 @@ class Snake
     possible_moves.each do |k ,v|
       # don't run into tail
       next if snake[:body].include?(v)
+      puts "#{snake[:body]} does not include #{v}"
       # don't leave board
       next if outside_board?(v)
+      puts "#{v} is not outside the board"
       legitimate_moves << k.to_s
     end
 
