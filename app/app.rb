@@ -23,11 +23,11 @@ post '/start' do
   request = underscore(env['rack.request.form_hash'])
   puts "START"
   content_type :json
-  
+
   appearance = {
-    color: "#888888",
-    head_type: "regular",
-    tail_type: "regular",
+    color: "#4AF626",
+    head_type: "shac-tiger-king",
+    tail_type: "shac-tiger-tail",
   }
 
   camelcase(appearance).to_json
