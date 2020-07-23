@@ -3,6 +3,7 @@ require 'rack/contrib'
 require 'sinatra'
 require './app/util'
 require './app/move'
+require './app/snake'
 
 use Rack::PostBodyContentTypeParser
 
@@ -37,8 +38,10 @@ end
 post '/move' do
   request = underscore(env['rack.request.form_hash'])
 
+  snake = Snake.new
+
   # Implement move logic in app/move.rb
-  response = move(request)
+  response = snake.move(request)
   content_type :json
   camelcase(response).to_json
 end
