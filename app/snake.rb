@@ -8,13 +8,17 @@ class Snake
     self.board = request[:board]
     self.head = snake[:head]
 
+    puts "Head: #{head}"
+
     legitimate_moves = []
 
     possible_moves.each do |k ,v|
       # don't run into tail
       next if snake[:body].include?(v)
+      puts "#{snake[:body]} does not include #{v}"
       # don't leave board
       next if outside_board?(v)
+      puts "#{v} is not outside the board"
       legitimate_moves << k.to_s
     end
 
@@ -30,8 +34,8 @@ class Snake
 
   def possible_moves
     {
-      up:     { x: head[:x], y: head[:y] + 1 },
-      down:   { x: head[:x], y: head[:y] - 1 },
+      up:     { x: head[:x], y: head[:y] - 1 },
+      down:   { x: head[:x], y: head[:y] + 1 },
       left:   { x: head[:x] - 1, y: head[:y] },
       right:  { x: head[:x] + 1, y: head[:y] }
     }
@@ -40,8 +44,8 @@ class Snake
   def outside_board?(coords)
     x = coords[:x]
     y = coords[:y]
-    return true if x < 0 || x > board[:width]
-    return true if y < 0 || y > board[:height]
+    return true if x < 0 || x >= board[:width]
+    return true if y < 0 || y >= board[:height]
     return false
   end
 end
