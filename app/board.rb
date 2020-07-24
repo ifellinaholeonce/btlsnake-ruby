@@ -1,3 +1,6 @@
+require 'knn'
+require './app/lib/hacks/knn/vector.rb'
+
 class Board
   attr_accessor :height, :width, :food, :snakes
 
@@ -8,7 +11,7 @@ class Board
     self.snakes = board[:snakes]
   end
 
-  def outside_board?(x, y)
+  def outside_board?(x:, y:)
     return true if x.negative? || x >= width
 
     return true if y.negative? || y >= height
@@ -16,6 +19,12 @@ class Board
     false
   end
 
-  def closest_food(x, y)
+  def closest_food(x:, y:)
+    foods = []
+    food.each { |food| foods << Knn::Vector.new([food[:x], food[:y]], nil)}
+    snake = Knn::Vector.new([x, y], nil)
+    classifier = Knn::Classifier.new(foods, 1)
+    coords = classifier.nearest_neighbours_to(snake).first.coordinates
+    { x: coords[0], y: coords[1] }
   end
 end

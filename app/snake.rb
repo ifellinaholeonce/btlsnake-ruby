@@ -56,6 +56,18 @@ class Snake
     possible_moves
   end
 
+  def get_dir_to_x_coord(x)
+    "right" if x > head[:x]
+    "left" if x < head[:x]
+    nil
+  end
+
+  def get_dir_to_y_coord(y)
+    "down" if y > head[:y]
+    "up" if y < head[:y]
+    nil
+  end
+
   def mutate_coords_by_dir(x, y, dir)
     coords = {x: x, y: y}
     case dir
@@ -72,6 +84,6 @@ class Snake
   end
 
   def outside_board?(x, y)
-    board.outside_board?(x, y)
+    board.outside_board?(x: x, y: y)
   end
 end
