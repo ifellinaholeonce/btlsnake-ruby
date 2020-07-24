@@ -10,6 +10,8 @@ Dir['./app/snake/*.rb'].sort.each { |file| require file }
 
 use Rack::PostBodyContentTypeParser
 
+$snake_class
+
 # If you open your Battlesnake URL in a browser you should see this message.
 get '/' do
   "Your Battlesnake is alive!\n"
@@ -28,6 +30,10 @@ post '/start' do
   puts "START"
   content_type :json
 
+  puts $snake_class
+  choose_a_snake
+  puts $snake_class
+
   appearance = {
     color: "#4AF626",
     head_type: "shac-tiger-king",
@@ -44,9 +50,8 @@ post '/move' do
   board = Board.new(request[:board])
 
   # Get random snake subclass
-  class_name = snake_classes.sample + "Snake"
-  snake_class = Object.const_get(class_name)
-  snake = snake_class.new(player: request[:you], board: board)
+  class_name = Object.const_get($snake_class)
+  snake = class_name.new(player: request[:you], board: board)
   puts "Initialized: #{snake.class}"
 
   # Implement move logic in app/move.rb
@@ -64,4 +69,8 @@ end
 
 def snake_classes
   ["", "Growth"]
+end
+
+def choose_a_snake
+  $snake_class = snake_classes.sample + "Snake"
 end
