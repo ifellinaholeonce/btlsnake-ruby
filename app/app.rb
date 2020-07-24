@@ -38,10 +38,10 @@ end
 post '/move' do
   request = underscore(env['rack.request.form_hash'])
 
-  snake = Snake.new
+  snake = Snake.new(request)
 
   # Implement move logic in app/move.rb
-  response = snake.move(request)
+  response = snake.move
   content_type :json
   camelcase(response).to_json
 end

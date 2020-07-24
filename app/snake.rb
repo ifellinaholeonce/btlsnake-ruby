@@ -1,14 +1,13 @@
 class Snake
   attr_accessor :snake, :board, :head
 
-  def initialize(); end
-
-  def move(request)
-    puts(request)
+  def initialize(request)
     self.snake = request[:you]
     self.board = request[:board]
     self.head = snake[:head]
+  end
 
+  def move
     puts "Head: #{head}"
 
     possible_moves = possible_moves_from_square(head[:x], head[:y])
