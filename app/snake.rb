@@ -57,14 +57,14 @@ class Snake
   end
 
   def get_dir_to_x_coord(x)
-    "right" if x > head[:x]
-    "left" if x < head[:x]
+    return "right" if x > head[:x]
+    return "left" if x < head[:x]
     nil
   end
 
   def get_dir_to_y_coord(y)
-    "down" if y > head[:y]
-    "up" if y < head[:y]
+    return "down" if y > head[:y]
+    return "up" if y < head[:y]
     nil
   end
 

@@ -68,7 +68,7 @@ post '/end' do
 end
 
 def snake_classes
-  ["", "Growth"]
+  ["Growth"]
 end
 
 def choose_a_snake
