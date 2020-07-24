@@ -2,13 +2,15 @@ require './app/snake'
 
 # This subclass will prioritize growth over all else
 class GrowthSnake < Snake
-  def initialize(request)
-    self.snake = request[:you]
-    self.board = request[:board]
+  attr_accessor :snake, :head, :board
+
+  def initialize(player:, board:)
+    self.board = board
+    self.snake = player
     self.head = snake[:head]
   end
 
-  def move(request)
+  def move
     super
   end
 
@@ -27,6 +29,7 @@ class GrowthSnake < Snake
     end
   end
 
-  def find_closest_food
+  def closest_food
+    board.closest_food
   end
 end

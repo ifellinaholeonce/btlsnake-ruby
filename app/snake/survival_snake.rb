@@ -2,13 +2,15 @@ require './app/snake'
 
 # This subclass will prioritize survival over all else
 class SurvivalSnake < Snake
-  def initialize(request)
-    self.snake = request[:you]
-    self.board = request[:board]
+  attr_accessor :snake, :head, :board
+
+  def initialize(player:, board:)
+    self.board = board
+    self.snake = player
     self.head = snake[:head]
   end
 
-  def move(request)
+  def move
     super
   end
 

@@ -1,9 +1,12 @@
 require 'rack'
 require 'rack/contrib'
 require 'sinatra'
+require 'pry'
 require './app/util'
 require './app/move'
+require './app/board'
 require './app/snake'
+Dir['./app/snake/*.rb'].sort.each { |file| require file }
 
 use Rack::PostBodyContentTypeParser
 
@@ -38,7 +41,13 @@ end
 post '/move' do
   request = underscore(env['rack.request.form_hash'])
 
-  snake = Snake.new(request)
+  board = Board.new(request[:board])
+
+  # Get random snake subclass
+  class_name = snake_classes.sample + "Snake"
+  snake_class = Object.const_get(class_name)
+  snake = snake_class.new(player: request[:you], board: board)
+  puts "Initialized: #{snake.class}"
 
   # Implement move logic in app/move.rb
   response = snake.move
@@ -51,4 +60,8 @@ end
 post '/end' do
   puts "END"
   "ok\n"
+end
+
+def snake_classes
+  ["", "Growth"]
 end

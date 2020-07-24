@@ -1,9 +1,9 @@
 class Snake
-  attr_accessor :snake, :board, :head
+  attr_accessor :snake, :head, :board
 
-  def initialize(request)
-    self.snake = request[:you]
-    self.board = request[:board]
+  def initialize(player:, board:)
+    self.board = board
+    self.snake = player
     self.head = snake[:head]
   end
 
@@ -72,10 +72,6 @@ class Snake
   end
 
   def outside_board?(x, y)
-    return true if x.negative? || x >= board[:width]
-
-    return true if y.negative? || y >= board[:height]
-
-    false
+    board.outside_board?(x, y)
   end
 end
