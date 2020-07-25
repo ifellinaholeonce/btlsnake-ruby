@@ -11,6 +11,13 @@ class Board
     self.snakes = board[:snakes]
   end
 
+  def update(board)
+    self.height = board[:height]
+    self.width = board[:width]
+    self.food = board[:food]
+    self.snakes = board[:snakes]
+  end
+
   def outside_board?(x:, y:)
     return true if x.negative? || x >= width
 
@@ -23,7 +30,7 @@ class Board
     foods = []
     food.each { |food| foods << Knn::Vector.new([food[:x], food[:y]], nil)}
     snake = Knn::Vector.new([x, y], nil)
-    classifier = Knn::Classifier.new(foods, 1)
+    classifier = Knn::Classifier.new(foods, 3)
     coords = classifier.nearest_neighbours_to(snake).first.coordinates
     { x: coords[0], y: coords[1] }
   end

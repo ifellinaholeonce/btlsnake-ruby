@@ -5,11 +5,13 @@ require 'pry'
 require './app/util'
 require './app/move'
 require './app/board'
+require './app/game'
 require './app/snake'
 Dir['./app/snake/*.rb'].sort.each { |file| require file }
 
 use Rack::PostBodyContentTypeParser
 
+$games = {}
 $snake_class
 
 # If you open your Battlesnake URL in a browser you should see this message.
@@ -28,12 +30,13 @@ end
 post '/start' do
   request = underscore(env['rack.request.form_hash'])
   puts "START"
-  puts request
   content_type :json
 
-  puts $snake_class
-  choose_a_snake
-  puts $snake_class
+  game = Game.new(id: request[:game][:id])
+  game.board = Board.new(request[:board])
+  game.snake = create_snake(request, game.board)
+
+  $games[game.id] = game
 
   appearance = {
     color: "#4AF626",
@@ -48,12 +51,10 @@ end
 post '/move' do
   request = underscore(env['rack.request.form_hash'])
 
-  board = Board.new(request[:board])
-
-  # Get random snake subclass
-  class_name = Object.const_get($snake_class)
-  snake = class_name.new(player: request[:you], board: board)
-  puts "Initialized: #{snake.class}"
+  game = $games[request[:game][:id]]
+  game.board.update(request[:board])
+  game.snake.update(player: request[:you], board: game.board)
+  snake = game.snake
 
   # Implement move logic in app/move.rb
   response = snake.move
@@ -64,7 +65,10 @@ end
 # This function is called when a game your Battlesnake was in ends.
 # It's purely for informational purposes, you don't have to make any decisions here.
 post '/end' do
+  request = underscore(env['rack.request.form_hash'])
+
   puts "END"
+  $games.delete(request[:game][:id])
   "ok\n"
 end
 
@@ -74,4 +78,13 @@ end
 
 def choose_a_snake
   $snake_class = snake_classes.sample + "Snake"
+end
+
+def create_snake(request, board)
+  choose_a_snake
+  # Get random snake subclass
+  class_name = Object.const_get($snake_class)
+  snake = class_name.new(player: request[:you], board: board)
+  puts "Initialized: #{snake.class}"
+  snake
 end

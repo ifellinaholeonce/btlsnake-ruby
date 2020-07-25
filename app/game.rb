@@ -1,5 +1,7 @@
 class Game
   attr_accessor :id, :board, :snake
-  def initialize()
+
+  def initialize(id:)
+    self.id = id
   end
 end

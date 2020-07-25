@@ -7,7 +7,14 @@ class Snake
     self.head = snake[:head]
   end
 
+  def update(player:, board:)
+    self.board = board
+    self.snake = player
+    self.head = snake[:head]
+  end
+
   def move
+    puts "Class: #{self.class}"
     puts "Head: #{head}"
 
     possible_moves = possible_moves_from_square(head[:x], head[:y])

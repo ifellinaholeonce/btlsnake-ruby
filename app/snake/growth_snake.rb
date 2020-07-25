@@ -41,6 +41,6 @@ class GrowthSnake < Snake
   end
 
   def closest_food
-    @closest_food ||= board.closest_food(x: head[:x], y: head[:y])
+    board.closest_food(x: head[:x], y: head[:y])
   end
 end
