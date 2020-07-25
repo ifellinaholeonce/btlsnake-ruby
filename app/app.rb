@@ -68,6 +68,14 @@ post '/end' do
   request = underscore(env['rack.request.form_hash'])
 
   puts "END"
+  puts request
+  if request[:snakes].length == 1 && request[:snakes].first[:id] == request[:you][:id]
+    # TODO: Save this to a DB to analyze
+    puts "Victory"
+  else
+    # TODO: Try and determine reason
+    puts "We lost"
+  end
   $games.delete(request[:game][:id])
   "ok\n"
 end
