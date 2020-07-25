@@ -52,8 +52,7 @@ post '/move' do
   request = underscore(env['rack.request.form_hash'])
 
   game = $games[request[:game][:id]]
-  game.board.update(request[:board])
-  game.snake.update(player: request[:you], board: game.board)
+  game.tick(request)
   snake = game.snake
 
   # Implement move logic in app/move.rb
@@ -69,7 +68,10 @@ post '/end' do
 
   puts "END"
   puts request
-  if request[:snakes].length == 1 && request[:snakes].first[:id] == request[:you][:id]
+  # Maybe win/loss should leave on the Game and then once
+  # the game is completed we save it to DB and remove from
+  # memory.
+  if request[:board][:snakes].length == 1 && request[:board][:snakes].first[:id] == request[:you][:id]
     # TODO: Save this to a DB to analyze
     puts "Victory"
   else
