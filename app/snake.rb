@@ -50,6 +50,8 @@ class Snake
       next if snake[:body].include?(v)
       # don't leave board
       next if outside_board?(v[:x], v[:y])
+      # look out for other snakes
+      next if board.square_has_obstacle(x: v[:x], y: v[:y])
 
       possible_moves << k.to_s
     end
@@ -59,12 +61,14 @@ class Snake
   def get_dir_to_x_coord(x)
     return "right" if x > head[:x]
     return "left" if x < head[:x]
+
     nil
   end
 
   def get_dir_to_y_coord(y)
     return "down" if y > head[:y]
     return "up" if y < head[:y]
+
     nil
   end
 

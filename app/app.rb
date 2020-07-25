@@ -28,6 +28,7 @@ end
 post '/start' do
   request = underscore(env['rack.request.form_hash'])
   puts "START"
+  puts request
   content_type :json
 
   puts $snake_class

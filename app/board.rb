@@ -27,4 +27,11 @@ class Board
     coords = classifier.nearest_neighbours_to(snake).first.coordinates
     { x: coords[0], y: coords[1] }
   end
+
+  def square_has_obstacle(x:, y:)
+    coords = {x: x, y: y}
+    return true if snakes.include?(coords)
+
+    false
+  end
 end
