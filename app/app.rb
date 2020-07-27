@@ -33,8 +33,8 @@ post '/start' do
   content_type :json
 
   game = Game.new(id: request[:game][:id])
-  game.board = Board.new(request[:board])
-  game.snake = create_snake(request, game.board)
+  game.board = Board.new(board: request[:board], game: game)
+  game.snake = create_snake(request, game.board, game)
 
   $games[game.id] = game
 
@@ -90,11 +90,11 @@ def choose_a_snake
   $snake_class = snake_classes.sample + "Snake"
 end
 
-def create_snake(request, board)
+def create_snake(request, board, game)
   choose_a_snake
   # Get random snake subclass
   class_name = Object.const_get($snake_class)
-  snake = class_name.new(player: request[:you], board: board)
+  snake = class_name.new(player: request[:you], board: board, game: game)
   puts "Initialized: #{snake.class}"
   snake
 end

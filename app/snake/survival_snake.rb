@@ -2,9 +2,10 @@ require './app/snake'
 
 # This subclass will prioritize survival over all else
 class SurvivalSnake < Snake
-  attr_accessor :snake, :head, :board
+  attr_accessor :snake, :head, :board, :game
 
-  def initialize(player:, board:)
+  def initialize(player:, board:, game:)
+    self.game = game
     self.board = board
     self.snake = player
     self.head = snake[:head]

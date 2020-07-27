@@ -1,8 +1,8 @@
 class Snake
-  attr_accessor :snake, :head, :board
-
-  def initialize(player:, board:)
+  attr_accessor :snake, :head, :board, :game
+  def initialize(player:, board:, game:)
     self.board = board
+    self.game
     self.snake = player
     self.head = snake[:head]
   end
@@ -14,13 +14,18 @@ class Snake
   end
 
   def move
-    puts "Class: #{self.class}"
     puts "Head: #{head}"
 
     possible_moves = possible_moves_from_square(head[:x], head[:y])
 
-    # will a random direction have a move after? dont trap yourself
-    move = calculate_next_step(possible_moves)
+    move = special_first_move if take_special_first_move? && game.turn == 1
+
+    if move.nil?
+      possible_moves = possible_moves_from_square(head[:x], head[:y])
+
+      # will a random direction have a move after? dont trap yourself
+      move = calculate_next_step(possible_moves)
+    end
 
     puts "MOVE: #{move}"
     { "move": move }
@@ -79,6 +84,16 @@ class Snake
     nil
   end
 
+  def get_opposite_dir(dir)
+    dirs = {
+      up: "down",
+      down: "up",
+      left: "right",
+      right: "left"
+    }
+    dirs[dir.to_sym]
+  end
+
   def mutate_coords_by_dir(x, y, dir)
     coords = {x: x, y: y}
     case dir
@@ -96,5 +111,13 @@ class Snake
 
   def outside_board?(x, y)
     board.outside_board?(x: x, y: y)
+  end
+
+  def take_special_first_move?
+    false
+  end
+
+  def special_first_move
+    nil
   end
 end
