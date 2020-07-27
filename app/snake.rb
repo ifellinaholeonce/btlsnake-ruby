@@ -17,10 +17,14 @@ class Snake
     puts "Class: #{self.class}"
     puts "Head: #{head}"
 
-    possible_moves = possible_moves_from_square(head[:x], head[:y])
+    move = special_first_move if take_special_first_move?
 
-    # will a random direction have a move after? dont trap yourself
-    move = calculate_next_step(possible_moves)
+    if move.nil?
+      possible_moves = possible_moves_from_square(head[:x], head[:y])
+
+      # will a random direction have a move after? dont trap yourself
+      move = calculate_next_step(possible_moves)
+    end
 
     puts "MOVE: #{move}"
     { "move": move }
@@ -79,6 +83,16 @@ class Snake
     nil
   end
 
+  def get_opposite_dir(dir)
+    dirs = {
+      up: "down",
+      down: "up",
+      left: "right",
+      right: "left"
+    }
+    dirs[dir.to_sym]
+  end
+
   def mutate_coords_by_dir(x, y, dir)
     coords = {x: x, y: y}
     case dir
@@ -96,5 +110,13 @@ class Snake
 
   def outside_board?(x, y)
     board.outside_board?(x: x, y: y)
+  end
+
+  def take_special_first_move?
+    false
+  end
+
+  def special_first_move
+    nil
   end
 end

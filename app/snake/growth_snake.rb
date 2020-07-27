@@ -1,4 +1,6 @@
 require './app/snake'
+require 'knn'
+require './app/lib/hacks/knn/vector.rb'
 
 # This subclass will prioritize growth over all else
 class GrowthSnake < Snake
@@ -42,5 +44,36 @@ class GrowthSnake < Snake
 
   def closest_food
     board.closest_food(x: head[:x], y: head[:y])
+  end
+
+  def take_special_first_move?
+    true
+  end
+
+  def special_first_move
+    possible_moves = ["up", "down", "left", "right"]
+    dir = possible_moves.sample
+    # move away from all snakes on first move
+    snakes = []
+    board.snakes.each do |s|
+      next if s[:id] == snake[:id]
+
+      snakes << Knn::Vector.new([s[:head][:x], s[:head][:y]], nil)
+    end
+    # get closes 2
+    player_vector = Knn::Vector.new([snake[:head][:x], snake[:head][:y]], nil)
+    classifier = Knn::Classifier.new(snakes, 3)
+    coords = classifier.nearest_neighbours_to(player_vector).first(2)
+    coords.each do |coord|
+      coord_hash = { x: coord.coordinates.first, y: coord.coordinates.second }
+      if coord_hash[:x] == snake[:head][:x]
+        dir = get_opposite_dir(get_dir_to_y_coord(coord_hash[:y]))
+      end
+      if coord_hash[:y] == snake[:head][:y]
+        dir = get_opposite_dir(get_dir_to_y_coord(coord_hash[:x]))
+      end
+    end
+
+    dir
   end
 end
