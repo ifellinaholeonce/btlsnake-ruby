@@ -37,7 +37,9 @@ class Board
 
   def square_has_obstacle(x:, y:)
     coords = {x: x, y: y}
-    return true if snakes.include?(coords)
+    bodies_arr = []
+    snakes.each { |snek| bodies_arr << snek[:body] }
+    return true if bodies_arr.flatten.include?(coords)
 
     false
   end
