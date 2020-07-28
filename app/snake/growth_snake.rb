@@ -25,7 +25,10 @@ class GrowthSnake < Snake
       path = game.plot_direction
       if path
         coords_to_move_to = {x: path.first.c, y: path.first.r }
-        return dir = get_dir_to_x_coord(coords_to_move_to[:x]) || get_dir_to_y_coord(coords_to_move_to[:y])
+        puts coords_to_move_to
+        dir = get_dir_to_x_coord(coords_to_move_to[:x]) || get_dir_to_y_coord(coords_to_move_to[:y])
+        puts "dir: #{dir}"
+        return dir
       end
     end
     if dir.nil?
