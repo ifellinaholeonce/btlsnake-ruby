@@ -2,7 +2,7 @@ class Graph
   attr_reader :start, :stop
 
   def initialize(d, start = "A", stop = "B",
-                 obst = "#", empty = " ", out = "*")
+                 obst = "#", empty = "-", out = "*")
 
     [d, start, stop, obst, empty, out].each do |input|
       raise ArgumentError,

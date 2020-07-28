@@ -50,7 +50,7 @@ end
 # This function is called on every turn of a game. It's how your Battlesnake decides where to move.
 post '/move' do
   request = underscore(env['rack.request.form_hash'])
-
+puts request
   game = $games[request[:game][:id]]
   game.tick(request)
   snake = game.snake

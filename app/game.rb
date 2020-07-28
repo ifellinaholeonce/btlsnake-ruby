@@ -26,13 +26,11 @@ class Game
 
   def map_graph
     map = ""
-    board.width.times { map << "#" }
-    map << "##\n"
     # for each Y add a line like
     # "#0123456#"
     # which ends up looking like "# {0,0} {1,0}...#"
     board.height.times do |y|
-      line = "#"
+      line = ""
       # for each X determine if square has an obstacle
       board.width.times do |x|
         line << "B" and next if board.food.include?({ x: x, y: y })
@@ -42,14 +40,12 @@ class Game
         when true
           line << "#"
         when false
-          line << " "
+          line << "-"
         end
       end
-      line << "#\n"
+      line << "\n"
       map << line
     end
-    board.width.times { map << "#" }
-    map << "##"
     map
   end
 end
