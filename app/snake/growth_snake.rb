@@ -21,6 +21,11 @@ class GrowthSnake < Snake
 
   def calculate_next_step(possible_moves)
     if astar_enabled?
+      return "up" if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "up"))
+      return "down" if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "down"))
+      return "left" if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "left"))
+      return "right" if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "right"))
+
       path = game.plot_direction
       unless path.empty?
         coords_to_move_to = {x: path.first.c, y: path.first.r }
