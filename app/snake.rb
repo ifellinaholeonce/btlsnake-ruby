@@ -16,8 +16,6 @@ class Snake
   def move
     puts "Head: #{head}"
 
-    possible_moves = possible_moves_from_square(head[:x], head[:y])
-
     move = special_first_move if take_special_first_move? && game.turn == 1
 
     if move.nil?
