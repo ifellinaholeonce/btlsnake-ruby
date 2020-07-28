@@ -2,9 +2,10 @@ require 'knn'
 require './app/lib/hacks/knn/vector.rb'
 
 class Board
-  attr_accessor :height, :width, :food, :snakes
+  attr_accessor :height, :width, :food, :snakes, :game
 
   def initialize(board:, game:)
+    self.game = game
     self.height = board[:height]
     self.width = board[:width]
     self.food = board[:food]

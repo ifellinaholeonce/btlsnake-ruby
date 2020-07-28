@@ -21,6 +21,11 @@ class GrowthSnake < Snake
 
   def calculate_next_step(possible_moves)
     # move towards the closest food on the X axis if able
+    if enable_astar
+      path = game.plot_direction
+      coords_to_move_to = {x: path.first.c, y: path.first.r }
+      return dir = get_dir_to_x_coord(coords_to_move_to[:x]) || get_dir_to_y_coord(coords_to_move_to[:y])
+    end
     dir_x = get_dir_to_x_coord(closest_food[:x])
     dir_y = get_dir_to_y_coord(closest_food[:y])
     if dir_x && possible_moves.include?(dir_x) # left or right
@@ -41,6 +46,10 @@ class GrowthSnake < Snake
         calculate_next_step(possible_moves)
       end
     end
+  end
+
+  def enable_astar
+    true
   end
 
   def closest_food
