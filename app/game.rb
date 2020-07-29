@@ -10,7 +10,7 @@ class Game
   end
 
   def tick(request)
-    self.turn = request[:game][:turn]
+    self.turn = request[:turn]
     board.update(request[:board])
     snake.update(player: request[:you], board: board)
   end
