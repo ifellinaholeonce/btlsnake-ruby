@@ -26,17 +26,17 @@ class GrowthSnake < Snake
         new_head_coords = mutate_coords_by_dir(head[:x], head[:y], dir)
         return dir if possible_moves_from_square(new_head_coords[:x], new_head_coords[:y])
       end
-      if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "up"))
+      if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "dow"))
         dir = "down"
         new_head_coords = mutate_coords_by_dir(head[:x], head[:y], dir)
         return dir if possible_moves_from_square(new_head_coords[:x], new_head_coords[:y])
       end
-      if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "up"))
+      if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "left"))
         dir = "left"
         new_head_coords = mutate_coords_by_dir(head[:x], head[:y], dir)
         return dir if possible_moves_from_square(new_head_coords[:x], new_head_coords[:y])
       end
-      if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "up"))
+      if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "right"))
         dir = "right"
         new_head_coords = mutate_coords_by_dir(head[:x], head[:y], dir)
         return dir if possible_moves_from_square(new_head_coords[:x], new_head_coords[:y])
