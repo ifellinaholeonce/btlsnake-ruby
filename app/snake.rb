@@ -1,4 +1,5 @@
 class Snake
+  # TODO: IGNORE TAIL AS OBSTACLE (UNLESS JUST GOT FOOD)
   attr_accessor :snake, :head, :board, :game
   def initialize(player:, board:, game:)
     self.board = board
@@ -16,7 +17,7 @@ class Snake
   def move
     puts "Head: #{head}"
 
-    move = special_first_move if take_special_first_move? && game.turn == 1
+    move = special_first_move if take_special_first_move? && game.turn == 0
 
     if move.nil?
       possible_moves = possible_moves_from_square(head[:x], head[:y])

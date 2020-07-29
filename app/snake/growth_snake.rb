@@ -21,10 +21,26 @@ class GrowthSnake < Snake
 
   def calculate_next_step(possible_moves)
     if astar_enabled?
-      return "up" if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "up"))
-      return "down" if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "down"))
-      return "left" if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "left"))
-      return "right" if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "right"))
+      if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "up"))
+        dir = "up"
+        new_head_coords = mutate_coords_by_dir(head[:x], head[:y], dir)
+        return dir if possible_moves_from_square(new_head_coords[:x], new_head_coords[:y])
+      end
+      if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "up"))
+        dir = "down"
+        new_head_coords = mutate_coords_by_dir(head[:x], head[:y], dir)
+        return dir if possible_moves_from_square(new_head_coords[:x], new_head_coords[:y])
+      end
+      if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "up"))
+        dir = "left"
+        new_head_coords = mutate_coords_by_dir(head[:x], head[:y], dir)
+        return dir if possible_moves_from_square(new_head_coords[:x], new_head_coords[:y])
+      end
+      if board.food.include?(mutate_coords_by_dir(head[:x], head[:y], "up"))
+        dir = "right"
+        new_head_coords = mutate_coords_by_dir(head[:x], head[:y], dir)
+        return dir if possible_moves_from_square(new_head_coords[:x], new_head_coords[:y])
+      end
 
       path = game.plot_direction
       unless path.empty?
@@ -88,6 +104,7 @@ class GrowthSnake < Snake
     coords = classifier.nearest_neighbours_to(player_vector).first(2)
     coords.each do |coord|
       coord_hash = { x: coord.coordinates.first, y: coord.coordinates.second }
+      puts "opp snake coord: #{coord}"
       if coord_hash[:x] == snake[:head][:x]
         dir = get_opposite_dir(get_dir_to_y_coord(coord_hash[:y]))
       end
@@ -96,6 +113,7 @@ class GrowthSnake < Snake
       end
     end
 
+    puts "first move: #{dir}"
     dir
   end
 end

@@ -40,7 +40,11 @@ class Board
     coords = {x: x, y: y}
     bodies_arr = []
     snakes.each { |snek| bodies_arr << snek[:body] }
-    return true if bodies_arr.flatten.include?(coords)
+    player_tail = game.snake.snake[:body].last
+    bodies_arr = bodies_arr.flatten
+    # TODO: This will fail on turns when an apple was jut eaten
+    bodies_arr.delete({ x: player_tail[:x], y: player_tail[:y] })
+    return true if bodies_arr.include?(coords)
 
     false
   end
