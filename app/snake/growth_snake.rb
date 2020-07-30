@@ -77,7 +77,7 @@ class GrowthSnake < Snake
   end
 
   def astar_enabled?
-    true
+    false
   end
 
   def closest_food
