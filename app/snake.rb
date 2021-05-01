@@ -47,9 +47,9 @@ class Snake
 
   def direction_hash(x, y)
     {
-      up: { x: x, y: y - 1 },
-      down: { x: x, y: y + 1 },
-      left: { x: x - 1, y: y },
+      up:    { x: x, y: y + 1 },
+      down:  { x: x, y: y - 1 },
+      left:  { x: x - 1, y: y },
       right: { x: x + 1, y: y }
     }
   end

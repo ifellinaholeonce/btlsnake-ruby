@@ -16,12 +16,13 @@ $snake_class
 
 # If you open your Battlesnake URL in a browser you should see this message.
 get '/' do
-  "Your Battlesnake is alive!\n"
-end
-
-# The Battlesnake engine calls this function to make sure your Battlesnake is working.
-post '/ping' do
-  "pong\n"
+  {
+    apiversion: "1",
+    author: "ifellinaholeonce",
+    color: "#4AF626",
+    head: "shac-tiger-king",
+    tail: "shac-tiger-tail"
+  }
 end
 
 # This function is called everytime your Battlesnake is entered into a game.
@@ -37,14 +38,7 @@ post '/start' do
   game.snake = create_snake(request, game.board, game)
 
   $games[game.id] = game
-
-  appearance = {
-    color: "#4AF626",
-    head_type: "shac-tiger-king",
-    tail_type: "shac-tiger-tail",
-  }
-
-  camelcase(appearance).to_json
+  true
 end
 
 # This function is called on every turn of a game. It's how your Battlesnake decides where to move.
